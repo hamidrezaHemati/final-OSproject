@@ -89,3 +89,11 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int sys_ticketLockInit(void){
+    return sys_ticketLockInit();
+}
+
+int sys_ticketLockTest(void){
+   return sys_ticketLockTest();
+}
