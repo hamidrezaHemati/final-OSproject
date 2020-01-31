@@ -6,7 +6,7 @@
 #include "mmu.h"
 #include "proc.h"
 #include "spinlock.h"
-#include "ticketlock.h"
+#include "ticketLock.h"
 
 void
 initlock_t(struct ticketlock *lk, char *name)
@@ -21,14 +21,13 @@ initlock_t(struct ticketlock *lk, char *name)
 void
 acquire_t(struct ticketlock *lk)
 {
-  uint ticket;
-  //pushcli(); // disable interrupts to avoid deadlock.
+  int ticket;
+  pushcli(); // disable interrupts to avoid deadlock.
   if(holding_t(lk))
     panic("acquire");
 
   ticket = fetch_and_add(&lk->ticket, 1);
-  while(lk->turn != ticket)
-    givepriority(lk->proc);
+  while(lk->turn != ticket);
 
   // Record info about lock acquisition for debugging.
   lk->cpu = mycpu();
@@ -49,9 +48,8 @@ release_t(struct ticketlock *lk)
 
   lk->turn++; //fetch_and_add(&lk->turn, 1);
   wakeup(lk);
-  resetpriority();
 
-  //popcli();
+  popcli();
 }
 
 // Check whether this cpu is holding the lock.

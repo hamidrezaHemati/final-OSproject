@@ -1,5 +1,5 @@
 struct ticketlock {
-  uint ticket;       // Is the lock held?
+  int ticket;       // Is the lock held?
   uint turn;
 
   struct proc *proc;

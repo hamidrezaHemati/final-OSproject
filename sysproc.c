@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "ticketLock.h"
 
 int
 sys_fork(void)
@@ -91,9 +92,11 @@ sys_uptime(void)
 }
 
 int sys_ticketLockInit(void){
-    return sys_ticketLockInit();
+    ticketLockInit();
+    return 0;
 }
 
 int sys_ticketLockTest(void){
-   return sys_ticketLockTest();
+   ticketLockTest();
+   return 0;
 }

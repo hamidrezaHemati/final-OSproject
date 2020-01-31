@@ -138,9 +138,10 @@ void            popcli(void);
 
 // ticketlock.c
 
-void            initlock_t(struct ticketlock *lk, char *name);
-void            acquire_t(struct ticketlock *lk);
-void            release_t(struct ticketlock *lk);
+void            initlock_t(struct ticketlock*, char*);
+void            acquire_t(struct ticketlock*);
+void            release_t(struct ticketlock*);
+int             holding_t(struct ticketlock*);
 
 // sleeplock.c
 void            acquiresleep(struct sleeplock*);
