@@ -532,3 +532,18 @@ procdump(void)
     cprintf("\n");
   }
 }
+
+/*
+  call initlock_t in this syscall to initialize a new lock
+*/
+void ticketLockInit(void){
+
+}
+/*
+  using acquire_t and relese_t functions from ticketLock.c in this system call
+  
+*/
+void ticketLckTest(void){
+
+}
+

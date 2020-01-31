@@ -31,8 +31,8 @@ acquire_t(struct ticketlock *lk)
     givepriority(lk->proc);
 
   // Record info about lock acquisition for debugging.
-  lk->cpu = cpu;
-  lk->proc = proc;
+  lk->cpu = mycpu();
+  lk->proc = myproc();
   getcallerpcs(&lk, lk->pcs);
 }
 
@@ -58,5 +58,5 @@ release_t(struct ticketlock *lk)
 int
 holding_t(struct ticketlock *lock)
 {
-  return (lock->ticket != lock->turn) && (lock->proc == proc);
+  return (lock->ticket != lock->turn) && (lock->proc == myproc());
 }
