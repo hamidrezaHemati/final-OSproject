@@ -6,9 +6,12 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "ticketLock.h"
+
 
 struct {
   struct spinlock lock;
+  struct ticketlock Tlock;
   struct proc proc[NPROC];
 } ptable;
 
@@ -537,13 +540,15 @@ procdump(void)
   call initlock_t in this syscall to initialize a new lock
 */
 void ticketLockInit(void){
-
+    initlock_t(&ptable.Tlock, "ticket lock test");
 }
 /*
   using acquire_t and relese_t functions from ticketLock.c in this system call
-  
-*/
-void ticketLckTest(void){
 
+*/
+void ticketLockTest(void){
+    acquire_t(&ptable.Tlock);
+    cprintf("%d", 1);
+    release_t(&ptable.Tlock);
 }
 

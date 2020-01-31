@@ -144,6 +144,16 @@ lcr3(uint val)
   asm volatile("movl %0,%%cr3" : : "r" (val));
 }
 
+static inline int
+fetch_and_add(int *var, int value)
+{
+  asm volatile("lock; xaddl %0, %1"
+  :  "+r" (value), "+m" (*var)
+  :
+  :  "memory"
+  );
+  return value;
+}
 //PAGEBREAK: 36
 // Layout of the trap frame built on the stack by the
 // hardware and by trapasm.S, and passed to trap().
