@@ -123,8 +123,8 @@ void            wakeup(void*);
 void            yield(void);
 void            ticketLockTest(void);
 void            ticketLockInit(void);
-void            rwinit();
-void            rwtest();
+void            rwinit(void);
+int             rwtest(int);
 // swtch.S
 void            swtch(struct context**, struct context*);
 

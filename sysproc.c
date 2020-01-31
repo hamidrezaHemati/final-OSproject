@@ -104,7 +104,9 @@ int sys_rwinit(void){
     rwinit();
     return 0;
 }
-int sys_rwtest(void){
-    rwtest();
-    return 0;
+int sys_rwtest(){
+    int n;
+    if(argint(0, &n) < 0)
+      return -1;
+    return rwtest(n);
 }

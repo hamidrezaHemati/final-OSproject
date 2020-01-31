@@ -12,12 +12,16 @@
 struct {
   struct spinlock lock;
   struct ticketlock Tlock;
+  struct ticketlock writers;
+  struct ticketlock mutex;
   struct proc proc[NPROC];
 } ptable;
 
 static struct proc *initproc;
 
 int nextpid = 1;
+int readerCounter;
+int buffer;
 extern void forkret(void);
 extern void trapret(void);
 
@@ -552,9 +556,32 @@ void ticketLockTest(void){
     release_t(&ptable.Tlock);
 }
 void rwinit(void){
-
+    readerCounter = 0;
+    buffer = 0;
 }
-void rwtest(void){
-  
+int rwtest(int input){
+    ///1 is for writers and 0 is for readers
+    int result =0;
+    if(input == 1){
+        acquire_t(&ptable.writers);
+        buffer = 5;
+        release_t(&ptable.writers);
+    }
+    else {
+        acquire_t(&ptable.mutex);
+        readerCounter++;
+        if(readerCounter == 1)
+            acquire_t(&ptable.writers);
+        release_t(&ptable.mutex);
+
+        result = buffer;
+        acquire_t(&ptable.mutex);
+        readerCounter--;
+        if(readerCounter == 0)
+          release_t(&ptable.writers);
+        release_t(&ptable.mutex);
+
+    }
+    return result;
 }
 
