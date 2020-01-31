@@ -551,4 +551,10 @@ void ticketLockTest(void){
     cprintf("%d", 1);
     release_t(&ptable.Tlock);
 }
+void rwinit(void){
+
+}
+void rwtest(void){
+  
+}
 

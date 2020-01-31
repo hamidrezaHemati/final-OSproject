@@ -100,3 +100,11 @@ int sys_ticketLockTest(void){
    ticketLockTest();
    return 0;
 }
+int sys_rwinit(void){
+    rwinit();
+    return 0;
+}
+int sys_rwtest(void){
+    rwtest();
+    return 0;
+}
